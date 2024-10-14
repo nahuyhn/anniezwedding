@@ -4,6 +4,41 @@
   box-sizing: border-box;
 }
 
+@media (max-width: 768px) {
+  .phan-dau {
+      font-size: 24px; /* Giảm kích thước chữ cho phần đầu */
+  }
+
+  .phan-banner {
+      height: 50vh; /* Chiều cao nhỏ hơn trên màn hình nhỏ */
+  }
+
+  .phan-banner img {
+      object-fit: cover; /* Đảm bảo ảnh vẫn bao phủ toàn bộ khung */
+  }
+
+  .navbar {
+      display: flex; /* Hiện thanh menu trên màn hình nhỏ */
+      flex-direction: column; /* Căn giữa các mục */
+  }
+
+  .navbar ul {
+      flex-direction: column; /* Xếp dọc các mục trong thanh menu */
+      padding: 0; /* Xóa padding */
+  }
+
+  .navbar ul li {
+      margin: 10px 0; /* Khoảng cách giữa các mục menu */
+  }
+
+  .text1 {
+      font-size: 0.8rem; /* Giảm kích thước chữ cho phần văn bản */
+      top: 20vw; /* Điều chỉnh vị trí */
+      left: 5vw; /* Điều chỉnh vị trí */
+      right: 5vw; /* Đảm bảo căn giữa */
+  }
+}
+
 .sacramento-regular {
     font-family: "Sacramento", serif;
     font-weight: 400;

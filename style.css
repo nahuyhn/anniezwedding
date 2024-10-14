@@ -1,0 +1,167 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sacramento-regular {
+    font-family: "Sacramento", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .roboto-thin {
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+  }
+  
+  .roboto-light {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .roboto-regular {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .roboto-medium {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  .roboto-bold {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .roboto-black {
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+  }
+  
+  .roboto-thin-italic {
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    font-style: italic;
+  }
+  
+  .roboto-light-italic {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+  }
+  
+  .roboto-regular-italic {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+  
+  .roboto-medium-italic {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: italic;
+  }
+  
+  .roboto-bold-italic {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+  }
+  
+  .roboto-black-italic {
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+  }
+  
+
+.phan-dau {
+  background-color: rgb(249, 231, 249);
+  text-align: center;
+  width: 100%;
+  height: auto;
+  font-family: Sacramento;
+  font-size: xx-large;
+  color: rgb(251, 41, 188);
+}
+
+body, html {
+  height: 100%;
+}
+
+.phan-banner {
+  width: 100%;
+  height: 100vh; /* Chiều cao chiếm hết toàn bộ màn hình */
+  overflow: hidden; /* Ẩn phần hình ảnh vượt quá khung */
+  position: relative;
+}
+
+.phan-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Đảm bảo ảnh được bao phủ toàn bộ khung mà không bị biến dạng */
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: 0 0 30px 15px rgba(0, 0, 0, 0.5); /* Tạo viền mờ xung quanh ảnh */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(249, 231, 249, 0.164); /* Nền mờ đen */
+  z-index: 1; /* Đảm bảo overlay nằm trên ảnh */
+}
+
+.navbar {
+  position: fixed; /* Đặt thanh menu ở vị trí cố định */
+  bottom: 0; /* Gắn thanh menu ở đầu trang */
+  left: 0;
+  width: 100%; /* Chiếm toàn bộ chiều rộng */
+  background-color: rgb(249, 231, 249); /* Nền mờ cho thanh menu */
+  display: none; /* Ẩn thanh menu ban đầu */
+  z-index: 3; /* Đảm bảo thanh menu nằm trên tất cả các thành phần khác */
+}
+
+.navbar ul {
+  list-style: none; /* Xóa dấu chấm đầu dòng */
+  display: flex; /* Hiển thị các mục menu theo hàng ngang */
+  justify-content: center; /* Căn giữa các mục */
+  padding: 10px 0; /* Khoảng cách dọc cho thanh menu */
+}
+
+.navbar ul li {
+  margin: 0 20px; /* Khoảng cách giữa các mục menu */
+}
+
+.navbar ul li a {
+  color: rgb(251, 41, 188); /* Màu chữ */
+  text-decoration: none; /* Xóa gạch chân */
+  font-size: 1.7rem; /* Kích thước chữ */
+  font-weight: 900;
+  font-family: roboto;
+}
+
+.text1 {
+  z-index: 2;
+  position: absolute;
+  color: rgb(0, 0, 0); /* Màu chữ */
+  font-size: 1rem; /* Kích thước chữ */
+  text-align: center; /* Căn giữa chữ */
+  top: 32vw;
+  left: 30vw;
+  font-family: roboto;
+  text-transform: uppercase;
+  font-weight: 900;
+}

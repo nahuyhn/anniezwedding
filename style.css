@@ -4,119 +4,83 @@
   box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
-  .phan-dau {
-      font-size: 24px; /* Giảm kích thước chữ cho phần đầu */
-  }
-
-  .phan-banner {
-      height: 50vh; /* Chiều cao nhỏ hơn trên màn hình nhỏ */
-  }
-
-  .phan-banner img {
-      object-fit: cover; /* Đảm bảo ảnh vẫn bao phủ toàn bộ khung */
-  }
-
-  .navbar {
-      display: flex; /* Hiện thanh menu trên màn hình nhỏ */
-      flex-direction: column; /* Căn giữa các mục */
-  }
-
-  .navbar ul {
-      flex-direction: column; /* Xếp dọc các mục trong thanh menu */
-      padding: 0; /* Xóa padding */
-  }
-
-  .navbar ul li {
-      margin: 10px 0; /* Khoảng cách giữa các mục menu */
-  }
-
-  .text1 {
-      font-size: 0.8rem; /* Giảm kích thước chữ cho phần văn bản */
-      top: 20vw; /* Điều chỉnh vị trí */
-      left: 5vw; /* Điều chỉnh vị trí */
-      right: 5vw; /* Đảm bảo căn giữa */
-  }
+.sacramento-regular {
+  font-family: "Sacramento", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
-.sacramento-regular {
-    font-family: "Sacramento", serif;
-    font-weight: 400;
-    font-style: normal;
-  }
+.roboto-thin {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
 
-  .roboto-thin {
-    font-family: "Roboto", sans-serif;
-    font-weight: 100;
-    font-style: normal;
-  }
-  
-  .roboto-light {
-    font-family: "Roboto", sans-serif;
-    font-weight: 300;
-    font-style: normal;
-  }
-  
-  .roboto-regular {
-    font-family: "Roboto", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-  
-  .roboto-medium {
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
-    font-style: normal;
-  }
-  
-  .roboto-bold {
-    font-family: "Roboto", sans-serif;
-    font-weight: 700;
-    font-style: normal;
-  }
-  
-  .roboto-black {
-    font-family: "Roboto", sans-serif;
-    font-weight: 900;
-    font-style: normal;
-  }
-  
-  .roboto-thin-italic {
-    font-family: "Roboto", sans-serif;
-    font-weight: 100;
-    font-style: italic;
-  }
-  
-  .roboto-light-italic {
-    font-family: "Roboto", sans-serif;
-    font-weight: 300;
-    font-style: italic;
-  }
-  
-  .roboto-regular-italic {
-    font-family: "Roboto", sans-serif;
-    font-weight: 400;
-    font-style: italic;
-  }
-  
-  .roboto-medium-italic {
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
-    font-style: italic;
-  }
-  
-  .roboto-bold-italic {
-    font-family: "Roboto", sans-serif;
-    font-weight: 700;
-    font-style: italic;
-  }
-  
-  .roboto-black-italic {
-    font-family: "Roboto", sans-serif;
-    font-weight: 900;
-    font-style: italic;
-  }
-  
+.roboto-light {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-medium {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.roboto-black {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.roboto-thin-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.roboto-light-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.roboto-regular-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.roboto-medium-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.roboto-bold-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.roboto-black-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
 
 .phan-dau {
   background-color: rgb(249, 231, 249);
@@ -124,11 +88,12 @@
   width: 100%;
   height: auto;
   font-family: Sacramento;
-  font-size: xx-large;
+  font-size: 5vw; /* Sử dụng vw để kích thước chữ linh hoạt hơn */
   color: rgb(251, 41, 188);
 }
 
-body, html {
+body,
+html {
   height: 100%;
 }
 
@@ -141,7 +106,8 @@ body, html {
 
 .phan-banner img {
   width: 100%;
-  height: 100%;
+  height: auto; /* Giữ tỉ lệ khung hình của ảnh */
+  max-height: 100%; /* Đảm bảo không vượt quá chiều cao của phần banner */
   object-fit: cover; /* Đảm bảo ảnh được bao phủ toàn bộ khung mà không bị biến dạng */
   position: absolute;
   top: 0;
@@ -177,13 +143,13 @@ body, html {
 }
 
 .navbar ul li {
-  margin: 0 20px; /* Khoảng cách giữa các mục menu */
+  margin: 0 2vw; /* Sử dụng vw cho khoảng cách giữa các mục menu */
 }
 
 .navbar ul li a {
   color: rgb(251, 41, 188); /* Màu chữ */
   text-decoration: none; /* Xóa gạch chân */
-  font-size: 1.7rem; /* Kích thước chữ */
+  font-size: 2.5vw; /* Sử dụng vw cho kích thước chữ */
   font-weight: 900;
   font-family: roboto;
 }
@@ -192,10 +158,10 @@ body, html {
   z-index: 2;
   position: absolute;
   color: rgb(0, 0, 0); /* Màu chữ */
-  font-size: 1rem; /* Kích thước chữ */
+  font-size: 2vw; /* Sử dụng vw cho kích thước chữ */
   text-align: center; /* Căn giữa chữ */
-  top: 32vw;
-  left: 30vw;
+  top: 30%; /* Sử dụng % để căn giữa theo chiều dọc */
+  left: 30%; /* Sử dụng % để căn giữa theo chiều ngang */
   font-family: roboto;
   text-transform: uppercase;
   font-weight: 900;

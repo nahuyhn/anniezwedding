@@ -14,6 +14,52 @@
         body {
             background-color: rgb(249, 231, 249);
         }
+        .service-list {
+  background-color: #f9e7f9; /* Màu nền nhẹ nhàng */
+  padding: 20px; /* Khoảng cách xung quanh nội dung */
+  border-radius: 10px; /* Bo góc */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Tạo bóng nhẹ */
+  max-width: 600px; /* Giới hạn chiều rộng */
+  margin: 20px auto; /* Căn giữa nội dung */
+  font-family: 'Roboto', sans-serif; /* Sử dụng font Roboto */
+}
+
+.service-list h2 {
+  font-size: 1.8rem; /* Kích thước tiêu đề lớn hơn */
+  color: #fb29bc; /* Màu chữ tiêu đề */
+  text-align: center; /* Căn giữa tiêu đề */
+  margin-bottom: 15px; /* Khoảng cách giữa tiêu đề và danh sách */
+}
+
+.service-list ul {
+  list-style-type: disc; /* Kiểu dấu đầu dòng */
+  padding-left: 20px; /* Cách lề cho danh sách */
+  list-style-type: none; 
+}
+
+.service-list ul li {
+  font-size: 1.2rem; /* Kích thước chữ trong danh sách */
+  margin-bottom: 10px; /* Khoảng cách giữa các mục */
+  line-height: 1.5; /* Tăng khoảng cách giữa các dòng */
+  color: #333; /* Màu chữ đậm hơn cho danh sách */
+}
+
+.service-list ul li a {
+    text-decoration: none; /* Xóa gạch chân của liên kết */
+    color: inherit; /* Giữ nguyên màu chữ hiện tại hoặc bạn có thể thay đổi màu theo ý muốn */
+}
+
+.service-list ul li a:hover {
+    color: #fb29bc; /* Màu chữ khi di chuột vào liên kết */
+    transition: color 0.3s ease; /* Tạo hiệu ứng chuyển đổi mượt mà */
+}
+
+.service-list ul li::before {
+  content: "•"; /* Thay dấu đầu dòng bằng dấu chấm to */
+  color: #fb29bc; /* Màu của dấu chấm */
+  font-size: 1.5rem;
+  padding-right: 10px;
+}
     </style>
 </head>
 <body>
@@ -21,8 +67,18 @@
         <h2>Anniez Wedding</h2>
     </div>
     <div class="phan-dichvu">
-        <h1> Cho Thuê Áo Dài</h1>
-        <h1> Cho Thuê Nhân Sự</h1>
+        <<div class="service-list">
+            <h2>Chuyên cung cấp :</h2>
+            <ul>
+              <li><a href="aodai.html">Áo dài bê quả mới & đa dạng</a></li>
+              <li>Nhân sự bưng quả nội thành & các tỉnh thành lân cận</li>
+              <li>Mâm quả cưới</li>
+              <li>Gia tiên, cổng hoa</li>
+              <li>Chụp & quay truyền thống, phóng sự</li>
+              <li>Xe hoa, xe 16 chỗ</li>
+            </ul>
+          </div>
+        
     </div>
 
 

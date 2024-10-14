@@ -16,22 +16,173 @@
         }
         .phan-dau h1 {
             font-size: 5vw;
+            font-family: 'Sacramento', cursive;
+            margin: 0;
         }
+        .phan-dau h1 a {
+            text-decoration: none; /* Xóa gạch chân của liên kết */
+            color: rgb(251, 41, 188); /* Giữ nguyên màu chữ hiện tại hoặc bạn có thể thay đổi màu theo ý muốn */
+        }
+
+        .gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 ảnh mỗi hàng */
+    gap: 20px;
+    padding: 20px;
+}
+
+.item {
+    text-align: center;
+    border: 2px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.item p {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    font-family: roboto;
+    font-weight: 900;
+}
+
+.button-container {
+    text-align: center; /* Căn giữa nút */
+    margin: 20px 0; /* Tạo khoảng cách phía trên và dưới nút */
+}
+
+.back-button {
+    font-family: roboto;
+    display: inline-block; /* Để có thể thêm padding và margin */
+    padding: 10px 20px; /* Khoảng cách bên trong nút */
+    background-color: rgb(251, 41, 188); /* Màu nền của nút */
+    color: white; /* Màu chữ */
+    text-decoration: none; /* Xóa gạch chân */
+    border-radius: 5px; /* Bo tròn các góc của nút */
+    font-size: 1.2rem; /* Kích thước chữ */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu khi hover */
+}
+
+.back-button:hover {
+    background-color: #5c3152; /* Màu nền khi hover */
+}
+
     </style>
 </head>
 <body>
     <div class="phan-dau">
-        <h1>Anniez Wedding</h1>
+        <h1><a href="index.html">Anniez Wedding</a></h1>
+        <div class="gallery">
+            <div class="item">
+                <img src="./image/01.jpg" alt="A01">
+                <p>AW01</p>
+            </div>
+            <div class="item">
+                <img src="/image/02.jpg" alt="A02">
+                <p>AW02</p>
+            </div>
+            <div class="item">
+                <img src="image/03.jpg" alt="A03">
+                <p>AW03</p>
+            </div>
+            <div class="item">
+                <img src="image/04.jpg" alt="A04">
+                <p>AW04</p>
+            </div>
+            <div class="item">
+                <img src="image/05.jpg" alt="A05">
+                <p>AW05</p>
+            </div>
+            <div class="item">
+                <img src="image/06.jpg" alt="A06">
+                <p>AW06</p>
+            </div>
+            <div class="item">
+                <img src="image/07.jpg" alt="A07">
+                <p>AW07</p>
+            </div>
+            <div class="item">
+                <img src="image/08.jpg" alt="A08">
+                <p>AW08</p>
+            </div>
+            <div class="item">
+                <img src="image/09.jpg" alt="A09">
+                <p>AW09</p>
+            </div>
+            <div class="item">
+                <img src="image/10.jpg" alt="A10">
+                <p>AW010</p>
+            </div>
+            <div class="item">
+                <img src="image/11.jpg" alt="A11">
+                <p>AW011</p>
+            </div>
+            <div class="item">
+                <img src="image/12.jpg" alt="A12">
+                <p>AW012</p>
+            </div>
+            <div class="item">
+                <img src="image/13.jpg" alt="A13">
+                <p>AW013</p>
+            </div>
+            <div class="item">
+                <img src="image/14.jpg" alt="A14">
+                <p>AW014</p>
+            </div>
+            <div class="item">
+                <img src="image/15.jpg" alt="A15">
+                <p>AW015</p>
+            </div>
+            <div class="item">
+                <img src="image/16.jpg" alt="A16">
+                <p>AW016</p>
+            </div>
+            <div class="item">
+                <img src="image/17.jpg" alt="A17">
+                <p>AW017</p>
+            </div>
+            <div class="item">
+                <img src="image/18.jpg" alt="A18">
+                <p>AW018</p>
+            </div>
+            <div class="item">
+                <img src="image/19.jpg" alt="A19">
+                <p>AW019</p>
+            </div>
+            <div class="item">
+                <img src="image/20.jpg" alt="A20">
+                <p>AW020</p>
+            </div>
+            <div class="item">
+                <img src="image/21.jpg" alt="A21">
+                <p>AW021</p>
+            </div>
+            <div class="item">
+                <img src="image/22.jpg" alt="A22">
+                <p>AW022</p>
+            </div>
+            <div class="item">
+                <img src="image/23.jpg" alt="A23">
+                <p>AW023</p>
+            </div>
+            <div class="item">
+                <img src="image/24.jpg" alt="A24">
+                <p>AW024</p>
+            </div>
+            <div class="item">
+                <img src="image/25.jpg" alt="A25">
+                <p>AW025</p>
+            </div>
+        </div>    
 
-    <nav class="navbar" id="navbar">
-        <ul>
-            <li><a href="index.html">Trang Chủ</a></li>
-            <li><a href="dichvu.html">Dịch Vụ</a></li>
-            <li><a href="feedback.html">Feedbacks</a></li>
-            <li><a href="lienhe.html">Liên Hệ</a></li>
-        </ul>
-    </nav>
 
-    <script src="main.js"></script>
+    <div class="button-container">
+        <a href="index.html" class="back-button">Trở về Trang Chủ</a>
+    </div>
 </body>
 </html>

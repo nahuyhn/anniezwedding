@@ -184,7 +184,7 @@ html {
 .navbar ul li a {
   color: rgb(251, 41, 188); /* Màu chữ */
   text-decoration: none; /* Xóa gạch chân */
-  font-size: 2.5vw; /* Sử dụng vw cho kích thước chữ */
+  font-size: 2.3vw; /* Sử dụng vw cho kích thước chữ */
   font-weight: 900;
   font-family: roboto;
 }
@@ -200,4 +200,10 @@ html {
   font-family: roboto;
   text-transform: uppercase;
   font-weight: 900;
+}
+
+.phan-dau h7 {
+  font-size: medium;
+  font-family: roboto;
+  font-weight: 800;
 }

@@ -6,3 +6,4 @@ window.onscroll = function() {
         navbar.style.display = "none"; // Ẩn thanh menu khi ở trên cùng
     }
 };
+

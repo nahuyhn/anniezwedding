@@ -4,6 +4,41 @@
   box-sizing: border-box;
 }
 
+
+/* Thiết lập cho máy tính bảng (768px - 1024px) */
+@media (max-width: 1024px) {
+  body {
+    font-size: 14px; /* Giảm kích thước chữ cho máy tính bảng */
+  }
+
+  .navbar ul li {
+    margin: 0 10px; /* Giảm khoảng cách giữa các mục menu */
+  }
+
+  .text1 {
+    font-size: 1.5rem; /* Thay đổi kích thước chữ */
+    top: 25%; /* Điều chỉnh vị trí */
+    left: 20%; /* Điều chỉnh vị trí */
+  }
+}
+
+/* Thiết lập cho di động (dưới 768px) */
+@media (max-width: 768px) {
+  body {
+    font-size: 12px; /* Giảm kích thước chữ cho di động */
+  }
+
+  .navbar ul li {
+    margin: 0 5px; /* Giảm khoảng cách giữa các mục menu */
+  }
+
+  .text1 {
+    font-size: 1rem; /* Thay đổi kích thước chữ */
+    top: 20%; /* Điều chỉnh vị trí */
+    left: 10%; /* Điều chỉnh vị trí */
+  }
+}
+
 .sacramento-regular {
   font-family: "Sacramento", serif;
   font-weight: 400;

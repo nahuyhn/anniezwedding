@@ -4,41 +4,6 @@
   box-sizing: border-box;
 }
 
-
-/* Thiết lập cho máy tính bảng (768px - 1024px) */
-@media (max-width: 1024px) {
-  body {
-    font-size: 14px; /* Giảm kích thước chữ cho máy tính bảng */
-  }
-
-  .navbar ul li {
-    margin: 0 10px; /* Giảm khoảng cách giữa các mục menu */
-  }
-
-  .text1 {
-    font-size: 1.5rem; /* Thay đổi kích thước chữ */
-    top: 25%; /* Điều chỉnh vị trí */
-    left: 20%; /* Điều chỉnh vị trí */
-  }
-}
-
-/* Thiết lập cho di động (dưới 768px) */
-@media (max-width: 768px) {
-  body {
-    font-size: 12px; /* Giảm kích thước chữ cho di động */
-  }
-
-  .navbar ul li {
-    margin: 0 5px; /* Giảm khoảng cách giữa các mục menu */
-  }
-
-  .text1 {
-    font-size: 1rem; /* Thay đổi kích thước chữ */
-    top: 20%; /* Điều chỉnh vị trí */
-    left: 10%; /* Điều chỉnh vị trí */
-  }
-}
-
 .sacramento-regular {
   font-family: "Sacramento", serif;
   font-weight: 400;
@@ -208,59 +173,57 @@ html {
   font-weight: 800;
 }
 
-
-
 #comment {
-  width: 1012px;
-  height: 478px;
-  margin:0px auto;
-  margin-top:184px;
-  margin-bottom: 50px;
+  width: 100vw;
+  height: 50vw;
+  margin-left: 10vw;
+  margin-top: 20vw;
 }
 
 #comment h2 {
-  text-align: center;
-  margin-bottom: 50px;
-  font-size:32px;
-  color:rgb(251, 41, 188);
+  margin-left: 22%;
+  margin-bottom: 2vw;
+  font-size: xx-large;
+  color: rgb(251, 41, 188);
 }
 
-
-#comment-body{
+#comment-body {
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1000px;
+  width: 80vw;
   height: 400px;
   list-style: none;
   overflow: hidden;
 }
 
+/*DỊCH VỤ*/
 #list-comment {
   width: 100%;
   height: 100%;
   list-style: none;
-  transition:0.5s;
+  transition: 0.5s;
 }
 
 #list-comment .item {
   width: 100%;
   height: 100%;
-  background:rgb(239, 180, 221);
+  background: rgb(239, 180, 221);
   border-radius: 20px;
-  padding-top:50px;
+  padding-top: 50px;
 }
 
 #list-comment .item .avatar {
   text-align: center;
-  margin-top:13px;
+  margin-top: 13px;
 }
 
 #list-comment .item .stars {
   display: flex;
-  margin:0px auto;
+  margin: 0px auto;
   width: 50%;
-  margin-top:32px;
+  margin-top: 32px;
   justify-content: center;
   align-items: center;
 }
@@ -268,15 +231,126 @@ html {
 #list-comment .item .name {
   text-align: center;
   font-weight: bold;
-  color:#020000;
+  color: #020000;
 }
 
 #list-comment .item .text {
-  padding:20px 50px;
-  color:#0c0000;
+  padding: 20px 50px;
+  color: #0c0000;
   text-align: center;
   font-weight: 600;
   font-size: large;
- 
 }
 
+.phan-banner {
+  position: relative;
+  width: 100%; /* Đảm bảo phần banner chiếm toàn bộ chiều rộng */
+  height: 463px; /* Chiều cao cụ thể cho banner */
+  overflow: hidden; /* Ẩn bất kỳ phần nào vượt ra ngoài */
+}
+
+.banner-images {
+  display: flex;
+  transition: transform 1s ease-in-out;
+  width: 300%; /* Chiều rộng gấp 3 lần để chứa 3 ảnh */
+}
+
+.banner-images img {
+  width: 100%; /* Mỗi ảnh chiếm 1/3 chiều rộng của banner */
+  height: 100%; /* Đảm bảo chiều cao đầy đủ */
+  object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.banner-images img.active {
+  opacity: 1; /* Hiện ảnh đang hiển thị */
+}
+
+#wp-products {
+  padding-top: 116px;
+  padding-bottom: 78px;
+  padding-left: 134px;
+  padding-right: 134px;
+}
+
+#wp-products h2 {
+  text-align: center;
+  margin-bottom: 76px;
+  font-size: 32px;
+  color: rgb(251, 41, 188);
+}
+
+#list-products {
+  display: flex; /* Sử dụng flexbox để căn chỉnh các phần tử con */
+  flex-wrap: nowrap; /* Không cho phép các phần tử xuống hàng */
+  list-style: none; /* Xóa dấu chấm đầu dòng */
+  justify-content: space-around; /* Căn giữa các mục */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  overflow-x: auto; /* Cho phép cuộn ngang nếu cần */
+}
+
+#list-products .item {
+  width: 290px;
+  height: 374px;
+  background-color: #362f2f; /* Màu nền dự phòng nếu không có ảnh */
+  background-size: cover; /* Đảm bảo ảnh bao phủ toàn bộ phần tử */
+  background-position: center; /* Căn giữa ảnh */
+  border-radius: 10px;
+  margin: 0 10px; /* Khoảng cách giữa các phần tử */
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .phan-dau {
+    font-size: 7vw; /* Tăng kích thước chữ cho tablet */
+  }
+
+  .navbar ul li a {
+    font-size: 3vw; /* Tăng kích thước chữ cho menu */
+  }
+
+  #list-products {
+    flex-wrap: wrap; /* Cho phép các phần tử xuống hàng */
+    justify-content: center; /* Căn giữa các phần tử */
+  }
+
+  #list-products .item {
+    width: 45%; /* Chiếm 45% chiều rộng để vừa với 2 cột */
+    margin: 10px; /* Thay đổi khoảng cách */
+  }
+
+  #comment {
+    margin-left: 5vw; /* Giảm khoảng cách bên trái */
+    margin-top: 10vw; /* Giảm khoảng cách trên */
+  }
+}
+
+@media (max-width: 480px) {
+  .phan-dau {
+    font-size: 10vw; /* Tăng kích thước chữ cho mobile */
+  }
+
+  .navbar ul li a {
+    font-size: 4vw; /* Tăng kích thước chữ cho menu */
+  }
+
+  #list-products {
+    flex-direction: column; /* Đặt các phần tử thành cột */
+    align-items: center; /* Căn giữa các phần tử */
+  }
+
+  #list-products .item {
+    width: 90%; /* Chiếm 90% chiều rộng */
+    margin: 10px 0; /* Thay đổi khoảng cách dọc */
+  }
+
+  #comment {
+    margin-left: 0; /* Xóa khoảng cách bên trái */
+    margin-top: 5vw; /* Thay đổi khoảng cách trên */
+  }
+
+  #comment-body {
+    flex-direction: column; /* Đặt các phần tử thành cột */
+  }
+}

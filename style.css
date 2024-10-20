@@ -288,6 +288,10 @@ html {
   justify-content: space-around; /* Căn giữa các mục */
   align-items: center; /* Căn giữa theo chiều dọc */
   overflow-x: auto; /* Cho phép cuộn ngang nếu cần */
+  color: white;
+  font-weight: 600;
+  font-size: larger;
+
 }
 
 #list-products .item {
@@ -300,57 +304,3 @@ html {
   margin: 0 10px; /* Khoảng cách giữa các phần tử */
 }
 
-/* Media Queries */
-@media (max-width: 768px) {
-  .phan-dau {
-    font-size: 7vw; /* Tăng kích thước chữ cho tablet */
-  }
-
-  .navbar ul li a {
-    font-size: 3vw; /* Tăng kích thước chữ cho menu */
-  }
-
-  #list-products {
-    flex-wrap: wrap; /* Cho phép các phần tử xuống hàng */
-    justify-content: center; /* Căn giữa các phần tử */
-  }
-
-  #list-products .item {
-    width: 45%; /* Chiếm 45% chiều rộng để vừa với 2 cột */
-    margin: 10px; /* Thay đổi khoảng cách */
-  }
-
-  #comment {
-    margin-left: 5vw; /* Giảm khoảng cách bên trái */
-    margin-top: 10vw; /* Giảm khoảng cách trên */
-  }
-}
-
-@media (max-width: 480px) {
-  .phan-dau {
-    font-size: 10vw; /* Tăng kích thước chữ cho mobile */
-  }
-
-  .navbar ul li a {
-    font-size: 4vw; /* Tăng kích thước chữ cho menu */
-  }
-
-  #list-products {
-    flex-direction: column; /* Đặt các phần tử thành cột */
-    align-items: center; /* Căn giữa các phần tử */
-  }
-
-  #list-products .item {
-    width: 90%; /* Chiếm 90% chiều rộng */
-    margin: 10px 0; /* Thay đổi khoảng cách dọc */
-  }
-
-  #comment {
-    margin-left: 0; /* Xóa khoảng cách bên trái */
-    margin-top: 5vw; /* Thay đổi khoảng cách trên */
-  }
-
-  #comment-body {
-    flex-direction: column; /* Đặt các phần tử thành cột */
-  }
-}

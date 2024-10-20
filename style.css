@@ -89,7 +89,7 @@
   height: auto;
   font-family: Sacramento;
   font-size: 5vw; /* Sử dụng vw để kích thước chữ linh hoạt hơn */
-  color: rgb(251, 41, 188);
+  color: #FF83A9;
 }
 
 body,
@@ -130,7 +130,7 @@ html {
   bottom: 0; /* Gắn thanh menu ở đầu trang */
   left: 0;
   width: 100%; /* Chiếm toàn bộ chiều rộng */
-  background-color: rgb(249, 231, 249); /* Nền mờ cho thanh menu */
+  background-color: #f9f5f6; /* Nền mờ cho thanh menu */
   display: none; /* Ẩn thanh menu ban đầu */
   z-index: 3; /* Đảm bảo thanh menu nằm trên tất cả các thành phần khác */
 }
@@ -147,7 +147,7 @@ html {
 }
 
 .navbar ul li a {
-  color: rgb(251, 41, 188); /* Màu chữ */
+  color: #FF83A9; /* Màu chữ */
   text-decoration: none; /* Xóa gạch chân */
   font-size: 2.3vw; /* Sử dụng vw cho kích thước chữ */
   font-weight: 900;
@@ -184,7 +184,7 @@ html {
   margin-left: 22%;
   margin-bottom: 2vw;
   font-size: xx-large;
-  color: rgb(251, 41, 188);
+  color: #FF83A9;
 }
 
 #comment-body {
@@ -209,7 +209,7 @@ html {
 #list-comment .item {
   width: 100%;
   height: 100%;
-  background: rgb(239, 180, 221);
+  background: #FF83A9;
   border-radius: 20px;
   padding-top: 50px;
 }
@@ -278,7 +278,7 @@ html {
   text-align: center;
   margin-bottom: 76px;
   font-size: 32px;
-  color: rgb(251, 41, 188);
+  color: #FF83A9;
 }
 
 #list-products {

@@ -325,3 +325,112 @@ body {
   text-indent: -9999px; /* Ẩn nội dung chữ trong thẻ a nếu có */
 }
 
+
+/* Màn hình lớn từ 1200px trở lên */
+@media only screen and (min-width: 1200px) {
+  .phan-dau {
+    font-size: 4vw;
+  }
+
+  .navbar ul li a {
+    font-size: 1.5vw;
+  }
+
+  #list-products .item {
+    width: 320px;
+    height: 400px;
+  }
+}
+
+/* Màn hình tablet từ 768px đến 1200px */
+@media only screen and (max-width: 1200px) and (min-width: 768px) {
+  .phan-dau {
+    font-size: 6vw;
+  }
+
+  .navbar ul li a {
+    font-size: 3vw;
+  }
+
+  #list-products {
+    flex-wrap: wrap;
+  }
+
+  #list-products .item {
+    width: 240px;
+    height: 300px;
+  }
+
+  #wp-products {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+}
+
+/* Màn hình điện thoại dưới 768px */
+@media only screen and (max-width: 768px) {
+  .phan-dau {
+    font-size: 8vw;
+  }
+
+  .navbar ul li a {
+    font-size: 5vw;
+  }
+
+  #list-products {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #list-products .item {
+    width: 100%;
+    height: auto;
+  }
+
+  #comment {
+    margin-left: 5vw;
+    margin-top: 10vw;
+  }
+
+  #comment h2 {
+    margin-left: 10%;
+    font-size: large;
+  }
+
+  #wp-products {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+/* Màn hình siêu nhỏ dưới 480px */
+@media only screen and (max-width: 480px) {
+  .phan-dau {
+    font-size: 10vw;
+  }
+
+  .navbar ul li a {
+    font-size: 6vw;
+  }
+
+  #list-products .item {
+    width: 100%;
+    height: auto;
+  }
+
+  .text1 {
+    font-size: 4vw;
+    top: 20%;
+    left: 20%;
+  }
+
+  #comment {
+    margin-left: 2vw;
+    margin-top: 5vw;
+  }
+
+  #comment-body {
+    width: 100%;
+    height: auto;
+  }
+}

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,97 +12,128 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <style>
-        .fblink img {
-            position: relative;
-            width: 100px;
-            height: auto;
-            margin-left: 14vw;
-            margin-top: 15vw;
-        }
-        .fblink h2 {
-            margin-left: 11vw;
-            margin-top: 1vw;
-            color: rgb(251, 41, 188); /* Màu chữ */
-            text-decoration: none; /* Xóa gạch chân */
-            position: relative;
-        }
-
-        .fblink h2 a {
-            color: inherit; /* Kế thừa màu từ h2 */
-            text-decoration: none !important; /* Xóa gạch chân cho liên kết */
-        }
-        .zllink img {
-            position: relative;
-            width: 160px;
-            height: auto;
-            margin-left: 43vw;
-            top: -14vw;
-            
-        }
-        .zllink h2 {
-            margin-left: 45.8vw;
-            margin-top: -15.5vw;
-            color: rgb(251, 41, 188); /* Màu chữ */
-            text-decoration: none; /* Xóa gạch chân */
-            position: relative;
-        }
-
-        .zllink h2 a {
-            color: inherit; /* Kế thừa màu từ h2 */
-            text-decoration: none !important; /* Xóa gạch chân cho liên kết */
-        }
-        .sdt img {
-            position: relative;
-            width: 110px;
-            height: auto;
-            margin-left: 78vw;
-            top: -12.4vw;
-        }
-        .sdt h2 {
-            margin-left: 77vw;
-            margin-top: -12vw;
-            color: rgb(251, 41, 188); /* Màu chữ */
-            text-decoration: none; /* Xóa gạch chân */
-            position: relative;
-        }
-
         body {
             background-color: rgb(249, 231, 249);
+            font-family: 'Roboto', sans-serif; /* Áp dụng font cho body */
+            margin: 0;
+            padding: 0;
+        }
+
+        .phan-dau h1 a {
+            text-decoration: none;
+            color: #FF83A9; /* Màu cho tiêu đề */
+        }
+
+        .tieude {
+            color: #FF83A9;
+            font-weight: 800;
+            font-size: x-large;
+            margin: 20px; /* Khoảng cách cho tiêu đề */
+            text-align: center; /* Căn giữa tiêu đề */
+        }
+
+        .social-links {
+            display: flex; /* Sử dụng flexbox để sắp xếp các phần tử trên một hàng ngang */
+            justify-content: space-around; /* Căn đều các phần tử */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            flex-wrap: nowrap; /* Không cho phép các phần tử xuống dòng */
+            margin: 20px; /* Khoảng cách bên ngoài */
+            padding: 10px; /* Khoảng cách bên trong */
+            overflow-x: auto; /* Cho phép cuộn ngang nếu không đủ chỗ */
+        }
+
+        .social-links span {
+            background-color: white; /* Màu nền cho khối chữ nhật */
+            border-radius: 10px; /* Bo góc khối chữ nhật */
+            padding: 15px; /* Khoảng cách bên trong khối */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Đổ bóng cho khối */
+            text-align: center; /* Căn giữa nội dung bên trong span */
+            margin: 10px; /* Khoảng cách giữa các phần tử */
+            transition: transform 0.2s; /* Hiệu ứng chuyển tiếp khi hover */
+        }
+
+        .social-links img {
+            width: 50px; /* Chiều rộng của các biểu tượng */
+            height: auto; /* Tự động điều chỉnh chiều cao */
+            margin-bottom: 5px; /* Khoảng cách giữa hình ảnh và tên */
+        }
+
+        .social-links h2 {
+            font-size: 16px; /* Kích thước chữ */
+            color: #333; /* Màu chữ */
+            margin: 0; /* Bỏ margin */
+        }
+
+        .social-links span:hover {
+            transform: scale(1.05); /* Phóng to khi hover */
         }
 
         .menu {
     background-color: rgb(249, 231, 249); /* Màu nền cho menu */
     padding: 10px 0; /* Khoảng cách trên và dưới cho menu */
     text-align: center; /* Căn giữa nội dung menu */
-    position: relative; /* Đặt vị trí cho menu */
-    top: 14vw; /* Đặt menu ở dưới cùng */
     width: 100%; /* Đặt chiều rộng của menu 100% */
+    position: fixed; /* Giữ menu cố định */
+    bottom: 0; /* Đặt menu ở dưới cùng */
+    left: 0; /* Đặt menu từ cạnh trái */
+    z-index: 1000; /* Đặt thứ tự hiển thị để menu ở trên cùng */
 }
 
-.menu ul {
-    list-style-type: none; /* Bỏ dấu chấm đầu dòng cho danh sách */
-    margin: 0; /* Bỏ margin */
-    padding: 0; /* Bỏ padding */
+        .menu ul {
+            list-style-type: none; /* Bỏ dấu chấm đầu dòng cho danh sách */
+            margin: 0; /* Bỏ margin */
+            padding: 0; /* Bỏ padding */
+        }
+
+        .menu ul li {
+            display: inline; /* Hiển thị các phần tử danh sách theo hàng */
+            margin: 0 15px; /* Khoảng cách giữa các mục menu */
+        }
+
+        .menu a {
+            text-decoration: none; /* Xóa gạch chân cho liên kết */
+            color: #FF83A9; /* Màu chữ cho liên kết */
+            font-weight: 900; /* Đậm chữ */
+            font-size: large;
+        }
+
+        .menu a:hover {
+            color: rgb(255, 0, 0); /* Màu khi di chuột qua */
+        }
+        /* Media Queries */
+@media (max-width: 768px) {
+    .tieude {
+        font-size: large; /* Giảm kích thước chữ cho tiêu đề trên thiết bị nhỏ hơn */
+    }
+
+    .social-links {
+        flex-direction: column; /* Đặt các liên kết thành cột */
+        align-items: center; /* Căn giữa theo chiều dọc */
+    }
+
+    .social-links span {
+        margin: 10px 0; /* Khoảng cách giữa các phần tử trong cột */
+        width: 80%; /* Chiều rộng khối chữ nhật */
+    }
+
+    .menu ul li {
+        display: block; /* Hiển thị các mục menu theo cột */
+        margin: 10px 0; /* Khoảng cách giữa các mục menu */
+    }
 }
 
-.menu ul li {
-    display: inline; /* Hiển thị các phần tử danh sách theo hàng */
-    margin: 0 15px; /* Khoảng cách giữa các mục menu */
-}
+@media (max-width: 480px) {
+    .social-links img {
+        width: 40px; /* Giảm kích thước hình ảnh cho thiết bị nhỏ */
+    }
 
-.menu a {
-    text-decoration: none; /* Xóa gạch chân cho liên kết */
-    color: rgb(251, 41, 188); /* Màu chữ cho liên kết */
-    font-weight: 900; /* Đậm chữ */
-    font-size: large;
-}
+    .social-links h2 {
+        font-size: 14px; /* Giảm kích thước chữ cho tên */
+    }
 
-.menu a:hover {
-    color: rgb(255, 0, 0); /* Màu khi di chuột qua */
-}
-.phan-dau h1 a {
-    text-decoration: none;
-    color: inherit;
+    .tieude {
+        font-size: medium; /* Giảm kích thước chữ cho tiêu đề trên thiết bị rất nhỏ */
+    }
 }
     </style>
 </head>
@@ -109,24 +141,29 @@
     <div class="phan-dau">
         <h1><a href="index.html">Anniez Wedding</a></h1>
     </div>
-    <span class="fblink">
-        <a href="https://www.facebook.com/anniezwedding"><img src="./image/fb.png" alt="fblogo"></a>
-        <a href="https://www.facebook.com/anniezwedding"><h2>@anniezwedding</h2></a>
-    </span>
-    <span class="zllink">
-        <a href="https://zaloapp.com/qr/p/18xwfoawkd26x"><img src="./image/zalo.png" alt="zalologo"></a>
-        <a href="https://zaloapp.com/qr/p/18xwfoawkd26x"><h2>@zalo</h2></a>
-    </span>
-    <span class="sdt">
-        <a href="tel:0368465861"><img src="./image/call-us-icon-280x280.png" alt="SDT"></a>
-        <a href="tel:0368465861"><h2>@0368465861</h2></a> 
-    </span>
-    <span class="tiktok">
-        <a href="tel:0368465861"><img src="./image/call-us-icon-280x280.png" alt="SDT"></a>
-        <a href="tel:0368465861"><h2>@0368465861</h2></a> 
-    </span>
-
-
+    <div class="tieude">Các kênh liên hệ và liên kết của nhà Anniez:</div>
+    <div class="social-links">
+        <span class="fblink">
+            <a href="https://www.facebook.com/anniezwedding"><img src="./image/fb.png" alt="Facebook logo"></a>
+            <h2>@anniezwedding</h2>
+        </span>
+        <span class="zllink">
+            <a href="https://zaloapp.com/qr/p/18xwfoawkd26x"><img src="./image/zalo.png" alt="Zalo logo"></a>
+            <h2>@zalo</h2>
+        </span>
+        <span class="sdt">
+            <a href="tel:0368465861"><img src="./image/call-us-icon-280x280.png" alt="Call Us"></a>
+            <h2>@0368465861</h2>
+        </span>
+        <span class="tiktok">
+            <a href="https://www.tiktok.com/@anniezwedding"><img src="./image/tiktok.jpg" alt="TikTok"></a>
+            <h2>@anniezwedding</h2>
+        </span>
+        <span class="ins">
+            <a href="https://www.instagram.com/anniezwedding/"><img src="./image/ins.png" alt="Instagram"></a>
+            <h2>@anniezwedding</h2>
+        </span>
+    </div>
     <nav class="menu">
         <ul>
             <li><a href="index.html">Trang Chủ</a></li>

@@ -1,5 +1,7 @@
-\<!DOCTYPE html>
+\
+<!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,107 +10,181 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
     <style>
         body {
             background-color: rgb(249, 231, 249);
         }
+
         .service-list {
-            background-color: #f9e7f9; /* Màu nền nhẹ nhàng */
-            padding: 20px; /* Khoảng cách xung quanh nội dung */
-            border-radius: 10px; /* Bo góc */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Tạo bóng nhẹ */
-            max-width: 600px; /* Giới hạn chiều rộng */
-            margin: 20px auto; /* Căn giữa nội dung */
-            font-family: 'Roboto', sans-serif; /* Sử dụng font Roboto */
+            background-color: #f9e7f9;
+            /* Màu nền nhẹ nhàng */
+            padding: 20px;
+            /* Khoảng cách xung quanh nội dung */
+            border-radius: 10px;
+            /* Bo góc */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* Tạo bóng nhẹ */
+            max-width: 600px;
+            /* Giới hạn chiều rộng */
+            margin: 20px auto;
+            /* Căn giữa nội dung */
+            font-family: 'Roboto', sans-serif;
+            /* Sử dụng font Roboto */
         }
+
         .service-list h2 {
-            font-size: 1.8rem; /* Kích thước tiêu đề lớn hơn */
-            color: #fb29bc; /* Màu chữ tiêu đề */
-            text-align: center; /* Căn giữa tiêu đề */
-            margin-bottom: 15px; /* Khoảng cách giữa tiêu đề và danh sách */
+            font-size: 1.8rem;
+            /* Kích thước tiêu đề lớn hơn */
+            color: #fb29bc;
+            /* Màu chữ tiêu đề */
+            text-align: center;
+            /* Căn giữa tiêu đề */
+            margin-bottom: 15px;
+            /* Khoảng cách giữa tiêu đề và danh sách */
         }
+
         .service-list ul {
-            list-style-type: none; /* Bỏ dấu đầu dòng mặc định */
-            padding-left: 20px; /* Cách lề cho danh sách */
+            list-style-type: none;
+            /* Bỏ dấu đầu dòng mặc định */
+            padding-left: 20px;
+            /* Cách lề cho danh sách */
         }
+
         .service-list ul li {
-            font-size: 1.2rem; /* Kích thước chữ trong danh sách */
-            margin-bottom: 10px; /* Khoảng cách giữa các mục */
-            line-height: 1.5; /* Tăng khoảng cách giữa các dòng */
-            color: #333; /* Màu chữ đậm hơn cho danh sách */
+            font-size: 1.2rem;
+            /* Kích thước chữ trong danh sách */
+            margin-bottom: 10px;
+            /* Khoảng cách giữa các mục */
+            line-height: 1.5;
+            /* Tăng khoảng cách giữa các dòng */
+            color: #333;
+            /* Màu chữ đậm hơn cho danh sách */
         }
+
         .service-list ul li a {
-            text-decoration: none; /* Xóa gạch chân của liên kết */
-            color: inherit; /* Giữ nguyên màu chữ hiện tại hoặc bạn có thể thay đổi màu theo ý muốn */
+            text-decoration: none;
+            /* Xóa gạch chân của liên kết */
+            color: inherit;
+            /* Giữ nguyên màu chữ hiện tại hoặc bạn có thể thay đổi màu theo ý muốn */
         }
+
         .service-list ul li a:hover {
-            color: #fb29bc; /* Màu chữ khi di chuột vào liên kết */
-            transition: color 0.3s ease; /* Tạo hiệu ứng chuyển đổi mượt mà */
+            color: #fb29bc;
+            /* Màu chữ khi di chuột vào liên kết */
+            transition: color 0.3s ease;
+            /* Tạo hiệu ứng chuyển đổi mượt mà */
         }
+
         .service-list ul li::before {
-            content: "•"; /* Thay dấu đầu dòng bằng dấu chấm to */
-            color: #fb29bc; /* Màu của dấu chấm */
+            content: "•";
+            /* Thay dấu đầu dòng bằng dấu chấm to */
+            color: #fb29bc;
+            /* Màu của dấu chấm */
             font-size: 1.5rem;
             padding-right: 10px;
         }
+
         .social-links {
-            display: flex; /* Sử dụng Flexbox để bố trí các liên kết */
-            justify-content: center; /* Căn giữa các liên kết */
-            flex-wrap: wrap; /* Cho phép các phần tử xuống dòng khi không đủ chỗ */
-            margin-top: 20px; /* Khoảng cách phía trên danh sách liên kết xã hội */
+            display: flex;
+            /* Sử dụng Flexbox để bố trí các liên kết */
+            justify-content: center;
+            /* Căn giữa các liên kết */
+            flex-wrap: wrap;
+            /* Cho phép các phần tử xuống dòng khi không đủ chỗ */
+            margin-top: 20px;
+            /* Khoảng cách phía trên danh sách liên kết xã hội */
         }
+
         .social-links span {
-            background-color: #f9e7f9; /* Màu nền cho mỗi liên kết */
-            border-radius: 10px; /* Bo góc cho liên kết */
-            padding: 10px; /* Khoảng cách bên trong */
-            margin: 5px; /* Khoảng cách giữa các liên kết */
-            text-align: center; /* Căn giữa nội dung bên trong */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Bóng nhẹ cho mỗi liên kết */
+            background-color: #f9e7f9;
+            /* Màu nền cho mỗi liên kết */
+            border-radius: 10px;
+            /* Bo góc cho liên kết */
+            padding: 10px;
+            /* Khoảng cách bên trong */
+            margin: 5px;
+            /* Khoảng cách giữa các liên kết */
+            text-align: center;
+            /* Căn giữa nội dung bên trong */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* Bóng nhẹ cho mỗi liên kết */
         }
+
         .social-links img {
-            width: 50px; /* Đặt chiều rộng hình ảnh */
-            height: auto; /* Chiều cao tự động */
+            width: 50px;
+            /* Đặt chiều rộng hình ảnh */
+            height: auto;
+            /* Chiều cao tự động */
         }
+
         .social-links h2 {
-            margin: 5px 0 0; /* Khoảng cách cho tiêu đề */
-            font-size: 1rem; /* Kích thước chữ cho tiêu đề */
-            color: #fb29bc; /* Màu chữ cho tiêu đề */
+            margin: 5px 0 0;
+            /* Khoảng cách cho tiêu đề */
+            font-size: 1rem;
+            /* Kích thước chữ cho tiêu đề */
+            color: #fb29bc;
+            /* Màu chữ cho tiêu đề */
         }
+
         .menu {
-    background-color: rgb(249, 231, 249); /* Màu nền cho menu */
-    padding: 10px 0; /* Khoảng cách trên và dưới cho menu */
-    text-align: center; /* Căn giữa nội dung menu */
-    width: 100%; /* Đặt chiều rộng của menu 100% */
-    position: fixed; /* Giữ menu cố định */
-    bottom: 0; /* Đặt menu ở dưới cùng */
-    left: 0; /* Đặt menu từ cạnh trái */
-    z-index: 1000; /* Đặt thứ tự hiển thị để menu ở trên cùng */
-    display: flex; /* Sử dụng Flexbox cho menu */
-    justify-content: center; /* Căn giữa các mục menu */
-}
+            background-color: rgb(249, 231, 249);
+            /* Màu nền cho menu */
+            padding: 10px 0;
+            /* Khoảng cách trên và dưới cho menu */
+            text-align: center;
+            /* Căn giữa nội dung menu */
+            width: 100%;
+            /* Đặt chiều rộng của menu 100% */
+            position: fixed;
+            /* Giữ menu cố định */
+            bottom: 0;
+            /* Đặt menu ở dưới cùng */
+            left: 0;
+            /* Đặt menu từ cạnh trái */
+            z-index: 1000;
+            /* Đặt thứ tự hiển thị để menu ở trên cùng */
+            display: flex;
+            /* Sử dụng Flexbox cho menu */
+            justify-content: center;
+            /* Căn giữa các mục menu */
+        }
 
-.menu ul {
-    list-style-type: none; /* Bỏ dấu chấm đầu dòng cho danh sách */
-    margin: 0; /* Bỏ margin */
-    padding: 0; /* Bỏ padding */
-    display: flex; /* Sử dụng Flexbox cho danh sách */
-}
+        .menu ul {
+            list-style-type: none;
+            /* Bỏ dấu chấm đầu dòng cho danh sách */
+            margin: 0;
+            /* Bỏ margin */
+            padding: 0;
+            /* Bỏ padding */
+            display: flex;
+            /* Sử dụng Flexbox cho danh sách */
+        }
 
-.menu ul li {
-    margin: 0 15px; /* Khoảng cách giữa các mục menu */
-}
+        .menu ul li {
+            margin: 0 15px;
+            /* Khoảng cách giữa các mục menu */
+        }
+
         .menu a {
-            text-decoration: none; /* Xóa gạch chân cho liên kết */
-            color: #FF83A9; /* Màu chữ cho liên kết */
-            font-weight: 900; /* Đậm chữ */
+            text-decoration: none;
+            /* Xóa gạch chân cho liên kết */
+            color: #FF83A9;
+            /* Màu chữ cho liên kết */
+            font-weight: 900;
+            /* Đậm chữ */
             font-size: large;
         }
+
         .menu a:hover {
-            color: rgb(255, 0, 0); /* Màu khi di chuột qua */
+            color: rgb(255, 0, 0);
+            /* Màu khi di chuột qua */
         }
     </style>
 </head>
+
 <body>
     <div class="phan-dau">
         <h2>Anniez Wedding</h2>
@@ -126,7 +202,7 @@
                 <li>Xe hoa, xe 16 chỗ</li>
             </ul>
         </div>
-        
+
         <div class="social-links">
             <span class="fblink">
                 <a href="https://www.facebook.com/anniezwedding"><img src="./image/fb.png" alt="Facebook logo"></a>
@@ -154,4 +230,5 @@
 
     <script src="main.js"></script>
 </body>
+
 </html>

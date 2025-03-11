@@ -1,150 +1,120 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dịch Vụ Cho Thuê Áo Dài Bưng Quả và Nhân sự.</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-    <style>
-        body {
-            background-color: rgb(249, 231, 249);
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
-        .phan-dau h1 a {
-            text-decoration: none;
-            color: #FF83A9;
-        }
-        #jobInputSection, #jobDetailSection, #adminSection {
-            margin-top: 20px;
-        }
-        #map {
-            height: 400px;
-            width: 80%;
-            margin: 20px auto;
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="phan-dau">
-        <h1><a href="index.html">Anniez Wedding</a></h1>
-    </div>
-    
-    <div id="jobInputSection">
-        <h2>Nhập mã công việc</h2>
-        <input type="text" id="jobCodeInput" placeholder="Nhập mã công việc">
-        <button onclick="checkJobCode()">Xác nhận</button>
-    </div>
-    
-    <div id="jobDetailSection" style="display: none;">
-        <h2>Chi tiết công việc</h2>
-        <p id="jobInfo"></p>
-        <input type="text" id="userNameInput" placeholder="Nhập tên của bạn">
-        <button onclick="joinJob()">Tham gia công việc</button>
-    </div>
-    
-    <div id="adminSection" style="display: none;">
-        <h2>Admin: Xem vị trí người tham gia</h2>
-        <input type="text" id="adminJobCode" placeholder="Nhập mã công việc">
-        <button onclick="getAllParticipants()">Lấy vị trí tất cả</button>
-        <p id="participantList"></p>
-        <div id="map"></div>
-    </div>
-    
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyACcXy76y8N5XpR-73IBRNHMneNbv2oz9k",
-            authDomain: "anniezwedding-be1a8.firebaseapp.com",
-            projectId: "anniezwedding-be1a8",
-            storageBucket: "anniezwedding-be1a8.firebasestorage.app",
-            messagingSenderId: "792848269559",
-            appId: "1:792848269559:web:6b2b6a2ec9a942ce6613f2",
-            measurementId: "G-DT55Y6LJY7"
-        };
-        
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        
-        const jobs = {
-            "ABC123": { time: "01:02 - 02:00", location: "TP Hồ Chí Minh", coords: { lat: 10.7769, lng: 106.7009 } },
-            "XYZ789": { time: "14:00 - 18:00", location: "TP Hồ Chí Minh", coords: { lat: 10.7769, lng: 106.7009 } }
-        };
-        let currentJob = null;
-        let currentUser = "";
-        let map;
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyACcXy76y8N5XpR-73IBRNHMneNbv2oz9k",
+        authDomain: "anniezwedding-be1a8.firebaseapp.com",
+        databaseURL: "https://anniezwedding-be1a8-default-rtdb.firebaseio.com/",
+        projectId: "anniezwedding-be1a8",
+        storageBucket: "anniezwedding-be1a8.appspot.com",
+        messagingSenderId: "792848269559",
+        appId: "1:792848269559:web:6b2b6a2ec9a942ce6613f2",
+        measurementId: "G-DT55Y6LJY7"
+    };
 
-        function checkJobCode() {
-            const code = document.getElementById("jobCodeInput").value;
-            if (code === "an1122") {
-                document.getElementById("adminSection").style.display = "block";
-                return;
-            }
-            if (jobs[code]) {
-                currentJob = code;
-                document.getElementById("jobInfo").innerText = `Thời gian: ${jobs[code].time}\nĐịa điểm: ${jobs[code].location}`;
-                document.getElementById("jobInputSection").style.display = "none";
-                document.getElementById("jobDetailSection").style.display = "block";
-            } else {
-                alert("Mã công việc không hợp lệ!");
-            }
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    let jobs = {};
+    let currentJob = null;
+    let currentUser = "";
+    let map;
+
+    // 🔹 Load dữ liệu từ Firebase trước khi sử dụng
+    database.ref("jobs").once("value").then(snapshot => {
+        jobs = snapshot.val() || {};  // Nếu không có dữ liệu, gán một object rỗng
+        console.log("Dữ liệu công việc từ Firebase:", jobs);
+    }).catch(error => {
+        console.error("Lỗi khi tải dữ liệu Firebase:", error);
+    });
+
+    function checkJobCode() {
+        const code = document.getElementById("jobCodeInput").value;
+
+        // Kiểm tra nếu dữ liệu chưa tải xong
+        if (Object.keys(jobs).length === 0) {
+            alert("Dữ liệu công việc chưa tải xong, vui lòng thử lại!");
+            return;
         }
 
-        function joinJob() {
-            if (!currentJob) return;
-            const userName = document.getElementById("userNameInput").value;
-            if (!userName) {
-                alert("Vui lòng nhập tên của bạn!");
-                return;
-            }
-            currentUser = userName;
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(position => {
-                    const userLocation = { lat: position.coords.latitude, lng: position.coords.longitude, name: userName };
-                    database.ref(`jobs/${currentJob}/participants`).push(userLocation);
-                    alert("Bạn đã tham gia công việc thành công!");
-                }, () => {
-                    alert("Không thể lấy vị trí của bạn!");
-                });
-            } else {
-                alert("Trình duyệt không hỗ trợ định vị!");
-            }
+        if (code === "an1122") {
+            document.getElementById("adminSection").style.display = "block";
+            return;
         }
 
-        function getAllParticipants() {
-            const code = document.getElementById("adminJobCode").value;
-            if (!jobs[code]) {
-                alert("Mã công việc không hợp lệ!");
-                return;
-            }
-            if (!map) {
-                map = L.map('map').setView([jobs[code].coords.lat, jobs[code].coords.lng], 13);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap contributors'
-                }).addTo(map);
-            }
-            map.eachLayer(layer => {
-                if (layer instanceof L.Marker) {
-                    map.removeLayer(layer);
-                }
+        if (jobs[code]) {
+            currentJob = code;
+            document.getElementById("jobInfo").innerText = `Thời gian: ${jobs[code].time}\nĐịa điểm: ${jobs[code].location}`;
+            document.getElementById("jobInputSection").style.display = "none";
+            document.getElementById("jobDetailSection").style.display = "block";
+        } else {
+            alert("Mã công việc không hợp lệ!");
+        }
+    }
+
+    function joinJob() {
+        if (!currentJob) return;
+
+        const userName = document.getElementById("userNameInput").value;
+        if (!userName) {
+            alert("Vui lòng nhập tên của bạn!");
+            return;
+        }
+
+        currentUser = userName;
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                const userLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                    name: userName
+                };
+
+                database.ref(`jobs/${currentJob}/participants`).push(userLocation)
+                    .then(() => {
+                        alert("Bạn đã tham gia công việc thành công!");
+                    })
+                    .catch(error => {
+                        console.error("Lỗi khi lưu vị trí:", error);
+                    });
+            }, () => {
+                alert("Không thể lấy vị trí của bạn!");
             });
-            L.marker([jobs[code].coords.lat, jobs[code].coords.lng]).addTo(map)
-                .bindPopup("Vị trí công việc").openPopup();
-            database.ref(`jobs/${code}/participants`).once("value", snapshot => {
-                snapshot.forEach(childSnapshot => {
-                    const participant = childSnapshot.val();
-                    L.marker([participant.lat, participant.lng]).addTo(map)
-                        .bindPopup(`${participant.name}`).openPopup();
-                });
-            });
-            document.getElementById("map").style.display = "block";
+        } else {
+            alert("Trình duyệt không hỗ trợ định vị!");
         }
-    </script>
-</body>
-</html>
+    }
+
+    function getAllParticipants() {
+        const code = document.getElementById("adminJobCode").value;
+        if (!jobs[code]) {
+            alert("Mã công việc không hợp lệ!");
+            return;
+        }
+
+        if (!map) {
+            map = L.map('map').setView([jobs[code].coords.lat, jobs[code].coords.lng], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+        }
+
+        map.eachLayer(layer => {
+            if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
+            }
+        });
+
+        L.marker([jobs[code].coords.lat, jobs[code].coords.lng]).addTo(map)
+            .bindPopup("Vị trí công việc").openPopup();
+
+        database.ref(`jobs/${code}/participants`).once("value", snapshot => {
+            snapshot.forEach(childSnapshot => {
+                const participant = childSnapshot.val();
+                L.marker([participant.lat, participant.lng]).addTo(map)
+                    .bindPopup(`${participant.name}`).openPopup();
+            });
+        });
+
+        document.getElementById("map").style.display = "block";
+    }
+</script>

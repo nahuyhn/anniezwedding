@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nhân viên điểm danh</title>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 1rem; }
+    #map { height: 300px; width: 100%; margin-top: 1rem; }
+    input, button { display: block; margin: 0.5rem 0; padding: 0.5rem; width: 100%; }
+  </style>
+</head>
+<body>
+  <h2>Tham gia công việc</h2>
+  <input type="text" id="name" placeholder="Họ tên">
+  <input type="text" id="phone" placeholder="Số điện thoại">
+  <input type="text" id="jobCode" placeholder="Mã công việc">
+  <button onclick="fetchJobInfo()">Xác nhận mã công việc</button>
+
+  <div id="jobInfo"></div>
+  <button id="joinBtn" onclick="joinJob()" style="display:none;">Tham gia</button>
+
+  <div id="map"></div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyACcXy76y8N5XpR-73IBRNHMneNbv2oz9k",
+      authDomain: "anniezwedding-be1a8.firebaseapp.com",
+      databaseURL: "https://anniezwedding-be1a8-default-rtdb.firebaseio.com",
+      projectId: "anniezwedding-be1a8",
+      storageBucket: "anniezwedding-be1a8.firebasestorage.app",
+      messagingSenderId: "792848269559",
+      appId: "1:792848269559:web:6b2b6a2ec9a942ce6613f2",
+      measurementId: "G-DT55Y6LJY7"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    let map;
+    let userMarker;
+    let job;
+    let employeeId;
+    const sheetURL = 'https://opensheet.elk.sh/14hpn7reiKVO4lwBHPRST1N6ZgtCrMg4UWEe_D2QDV9k/CongViec';
+
+    function initMap(lat = 10.76, lng = 106.7) {
+      map = L.map('map').setView([lat, lng], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+      }).addTo(map);
+    }
+
+    function fetchJobInfo() {
+      const code = document.getElementById('jobCode').value.trim();
+      axios.get(sheetURL).then(res => {
+        const found = res.data.find(j => j['Mã công việc'] === code);
+        if (found) {
+          job = found;
+          document.getElementById('jobInfo').innerHTML = `
+            <p><strong>Vị trí công việc:</strong> ${job['Vị trí']}</p>
+            <p><strong>Thời gian có mặt:</strong> ${job['Thời gian có mặt']}</p>
+            <p><strong>Bắt đầu điểm danh:</strong> ${job['Thời gian bắt đầu điểm danh']}</p>
+          `;
+          document.getElementById('joinBtn').style.display = 'block';
+        } else {
+          document.getElementById('jobInfo').innerText = 'Không tìm thấy mã công việc.';
+        }
+      });
+    }
+
+    function joinJob() {
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const jobCode = document.getElementById('jobCode').value.trim();
+      if (!name || !phone || !jobCode || !job) return alert("Vui lòng điền đầy đủ thông tin.");
+
+      employeeId = `${jobCode}_${Date.now()}`;
+
+      alert('Bạn đã tham gia công việc. Vui lòng giữ trang mở để gửi vị trí.');
+      startTracking(name, phone, jobCode);
+    }
+
+    function startTracking(name, phone, jobCode) {
+      if (!navigator.geolocation) return alert('Trình duyệt không hỗ trợ định vị.');
+
+      setInterval(() => {
+        navigator.geolocation.getCurrentPosition(pos => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          const timestamp = new Date().toLocaleString();
+
+          // Cập nhật lên Firebase
+          db.ref('employees/' + employeeId).set({
+            name, phone, jobCode, timestamp,
+            location: { lat, lng }
+          });
+
+          if (!userMarker) {
+            userMarker = L.marker([lat, lng]).addTo(map).bindPopup("Bạn đang ở đây");
+          } else {
+            userMarker.setLatLng([lat, lng]);
+          }
+          map.setView([lat, lng]);
+        });
+      }, 10000); // 10 giây
+    }
+
+    initMap();
+  </script>
+</body>
+</html>

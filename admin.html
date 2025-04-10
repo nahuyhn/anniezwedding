@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Tracking nhân viên</title>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 0; }
+    #map { height: 100vh; width: 100%; }
+    .popup-info { font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script>
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyACcXy76y8N5XpR-73IBRNHMneNbv2oz9k",
+      authDomain: "anniezwedding-be1a8.firebaseapp.com",
+      databaseURL: "https://anniezwedding-be1a8-default-rtdb.firebaseio.com",
+      projectId: "anniezwedding-be1a8",
+      storageBucket: "anniezwedding-be1a8.firebasestorage.app",
+      messagingSenderId: "792848269559",
+      appId: "1:792848269559:web:6b2b6a2ec9a942ce6613f2",
+      measurementId: "G-DT55Y6LJY7"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    let map = L.map('map').setView([10.7769, 106.7009], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+    }).addTo(map);
+
+    const sheetURL = 'https://opensheet.elk.sh/14hpn7reiKVO4lwBHPRST1N6ZgtCrMg4UWEe_D2QDV9k/CongViec';
+
+    // Load công việc từ Google Sheets và hiển thị marker
+    function loadJobLocations() {
+      axios.get(sheetURL).then(res => {
+        res.data.forEach(job => {
+          const loc = job['Vị trí'].split(',').map(x => parseFloat(x.trim()));
+          L.marker(loc, {
+            icon: L.icon({
+              iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+              iconSize: [32, 32]
+            })
+          })
+            .addTo(map)
+            .bindPopup(`<strong>Công việc:</strong> ${job['Mã công việc']}`);
+        });
+      });
+    }
+
+    // Lắng nghe dữ liệu nhân viên từ Firebase
+    function listenToEmployees() {
+      db.ref("employees").on("value", snapshot => {
+        const data = snapshot.val();
+        if (!data) return;
+        Object.values(data).forEach(emp => {
+          if (!emp.location) return;
+          const { lat, lng } = emp.location;
+          L.marker([lat, lng]).addTo(map).bindPopup(`
+            <div class="popup-info">
+              <strong>${emp.name}</strong><br>
+              📞 ${emp.phone}<br>
+              🔢 Mã: ${emp.jobCode}<br>
+              🕒 Lúc: ${emp.timestamp}
+            </div>
+          `);
+        });
+      });
+    }
+
+    loadJobLocations();
+    listenToEmployees();
+  </script>
+</body>
+</html>

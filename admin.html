@@ -2,37 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin - Theo dõi nhân viên</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - Theo dõi công việc</title>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
   <style>
     body { font-family: sans-serif; margin: 0; padding: 0; }
-    #map { height: 60vh; width: 100%; }
+    #map { height: 50vh; width: 100%; }
     .container { padding: 1rem; }
-    input, button { padding: 0.5rem; margin: 0.25rem 0; }
+    input, button { padding: 0.5rem; margin: 0.25rem 0; width: 100%; }
     table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
     th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
+    h3 { margin-top: 2rem; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Admin - Nhập mã công việc</h2>
-    <input type="text" id="jobCode" placeholder="VD: JOB001" />
-    <button onclick="loadEmployees()">Tải danh sách</button>
-    <table id="employeeTable" style="display:none;">
-      <thead>
-        <tr>
-          <th>Họ tên</th>
-          <th>Giới tính</th>
-          <th>SĐT</th>
-          <th>Trạng thái</th>
-        </tr>
-      </thead>
-      <tbody id="tableBody"></tbody>
-    </table>
+    <h2>Admin - Theo dõi nhân viên</h2>
+    <input type="text" id="jobCode" placeholder="Nhập mã công việc" />
+    <button onclick="loadJobAndUsers()">Xem thông tin</button>
+
+    <div id="jobInfo"></div>
+    <div id="userList"></div>
+
+    <h3>Xóa nhân viên</h3>
+    <input type="text" id="deletePhone" placeholder="Nhập số điện thoại cần xóa" />
+    <button onclick="deleteUser()">Xóa theo số điện thoại</button>
+
+    <h3>Xóa theo mã công việc</h3>
+    <button onclick="deleteUsersByJobCode()">Xóa tất cả nhân viên của mã công việc</button>
+
+    <h3>Xóa toàn bộ dữ liệu</h3>
+    <button onclick="deleteAllUsers()">Xóa toàn bộ</button>
   </div>
   <div id="map"></div>
 
@@ -44,79 +48,127 @@
       projectId: "anniezwedding-be1a8",
       storageBucket: "anniezwedding-be1a8.appspot.com",
       messagingSenderId: "792848269559",
-      appId: "1:792848269559:web:6b2b6a2ec9a942ce6613f2",
-      measurementId: "G-DT55Y6LJY7"
+      appId: "1:792848269559:web:6b2b6a2ec9a942ce6613f2"
     };
-
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    let map = L.map('map').setView([10.7769, 106.7009], 12);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-    }).addTo(map);
+    let map, markers = [], jobMarker = null;
+    const sheetURL = 'https://opensheet.elk.sh/14hpn7reiKVO4lwBHPRST1N6ZgtCrMg4UWEe_D2QDV9k/CongViec';
 
-    let userMarkers = [];
-
-    function clearMarkers() {
-      userMarkers.forEach(marker => map.removeLayer(marker));
-      userMarkers = [];
+    function initMap() {
+      map = L.map('map').setView([10.7769, 106.7009], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19
+      }).addTo(map);
     }
 
-    function loadEmployees() {
+    function clearMarkers() {
+      markers.forEach(m => map.removeLayer(m));
+      markers = [];
+      if (jobMarker) {
+        map.removeLayer(jobMarker);
+        jobMarker = null;
+      }
+    }
+
+    function loadJobAndUsers() {
       const jobCode = document.getElementById('jobCode').value.trim();
-      const tbody = document.getElementById('tableBody');
-      tbody.innerHTML = '';
+      if (!jobCode) {
+        alert("Vui lòng nhập mã công việc.");
+        return;
+      }
+
       clearMarkers();
 
-      // Lấy dữ liệu vị trí công việc từ Google Sheets
-      fetch(`https://opensheet.elk.sh/14hpn7reiKVO4lwBHPRST1N6ZgtCrMg4UWEe_D2QDV9k/CongViec`)
-        .then(res => res.json())
-        .then(jobs => {
-          const job = jobs.find(j => j['Mã công việc'] === jobCode);
-          if (job && job['Vị trí']) {
-            const [lat, lng] = job['Vị trí'].split(',').map(Number);
-            const jobMarker = L.marker([lat, lng], { icon: L.icon({
-              iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
-              iconSize: [32, 32]
-            }) }).addTo(map);
-            jobMarker.bindPopup(`<strong>Vị trí công việc</strong><br>${job['Vị trí']}`);
-            userMarkers.push(jobMarker);
-            map.setView([lat, lng], 14);
-          }
-        });
-
-      // Theo dõi realtime danh sách nhân viên
-      firebase.database().ref('users').orderByChild('jobCode').equalTo(jobCode).on('value', snapshot => {
-        const data = snapshot.val();
-        tbody.innerHTML = '';
-        clearMarkers();
-
-        if (!data) {
-          alert('Không tìm thấy nhân viên');
+      axios.get(sheetURL).then(res => {
+        const jobs = res.data;
+        const job = jobs.find(j => j['Mã công việc'] === jobCode);
+        if (!job) {
+          document.getElementById('jobInfo').innerText = "Không tìm thấy mã công việc.";
           return;
         }
 
-        document.getElementById('employeeTable').style.display = 'table';
+        document.getElementById('jobInfo').innerHTML = `
+          <strong>Địa điểm:</strong> ${job['Địa điểm']}<br>
+          <strong>Thời gian có mặt:</strong> ${job['Thời gian có mặt']}<br>
+          <strong>Bắt đầu điểm danh:</strong> ${job['Thời gian bắt đầu điểm danh']}
+        `;
 
-        Object.values(data).forEach(user => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${user.fullName || 'Không có tên'}</td>
-            <td>${user.gender || '-'}</td>
-            <td>${user.phone || '-'}</td>
-            <td>${user.checkedIn ? 'Đã điểm danh' : 'Chưa điểm danh'}</td>
-          `;
-          tbody.appendChild(tr);
+        const [lat, lng] = job['Vị trí'].split(',').map(parseFloat);
+        jobMarker = L.marker([lat, lng]).addTo(map).bindPopup('Vị trí công việc').openPopup();
+        map.setView([lat, lng], 14);
 
-          if (user.latitude && user.longitude) {
-            const marker = L.marker([user.latitude, user.longitude]).addTo(map);
-            marker.bindPopup(`<strong>${user.fullName || 'Nhân viên'}</strong><br>SĐT: ${user.phone || ''}<br>Trạng thái: ${user.checkedIn ? 'Đã điểm danh' : 'Chưa điểm danh'}`);
-            userMarkers.push(marker);
+        db.ref('users').on('value', snapshot => {
+          const users = snapshot.val();
+          let html = `<table><tr><th>Tên</th><th>SĐT</th><th>Giới tính</th><th>Điểm danh</th><th>Vị trí hiện tại</th></tr>`;
+          if (users) {
+            Object.values(users).forEach(user => {
+              if (user.jobCode === jobCode) {
+                html += `<tr>
+                  <td>${user.fullName}</td>
+                  <td>${user.phone}</td>
+                  <td>${user.gender}</td>
+                  <td>${user.checkedIn ? '✅' : '❌'}</td>
+                  <td>${user.latitude && user.longitude ? `${user.latitude.toFixed(5)}, ${user.longitude.toFixed(5)}` : 'Chưa cập nhật'}</td>
+                </tr>`;
+                if (user.latitude && user.longitude) {
+                  const marker = L.marker([user.latitude, user.longitude])
+                    .addTo(map)
+                    .bindPopup(`${user.fullName} - ${user.phone}`);
+                  markers.push(marker);
+                }
+              }
+            });
           }
+          html += '</table>';
+          document.getElementById('userList').innerHTML = html;
         });
       });
     }
+
+    function deleteUser() {
+      const phone = document.getElementById('deletePhone').value.trim();
+      if (!phone) {
+        alert('Vui lòng nhập số điện thoại.');
+        return;
+      }
+      if (confirm(`Xác nhận xóa nhân viên có SĐT: ${phone}?`)) {
+        db.ref('users/' + phone).remove()
+          .then(() => alert('Đã xóa thành công!'))
+          .catch(err => alert('Lỗi khi xóa: ' + err.message));
+      }
+    }
+
+    function deleteUsersByJobCode() {
+      const jobCode = document.getElementById('jobCode').value.trim();
+      if (!jobCode) {
+        alert('Vui lòng nhập mã công việc.');
+        return;
+      }
+
+      if (!confirm(`Bạn có chắc muốn xóa toàn bộ nhân viên tham gia công việc "${jobCode}"?`)) return;
+
+      db.ref('users').once('value', snapshot => {
+        snapshot.forEach(child => {
+          const data = child.val();
+          if (data.jobCode === jobCode) {
+            db.ref('users/' + child.key).remove();
+          }
+        });
+        alert('Đã xóa toàn bộ nhân viên của công việc này.');
+      });
+    }
+
+    function deleteAllUsers() {
+      if (confirm('Bạn có chắc muốn xóa toàn bộ dữ liệu người dùng?')) {
+        db.ref('users').remove()
+          .then(() => alert('Đã xóa toàn bộ dữ liệu người dùng.'))
+          .catch(err => alert('Lỗi khi xóa: ' + err.message));
+      }
+    }
+
+    initMap();
   </script>
 </body>
 </html>

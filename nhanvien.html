@@ -71,7 +71,7 @@
         job = jobs.find(j => j['Mã công việc'] === code);
         if (job) {
           document.getElementById('jobInfo').innerHTML = `
-            <strong>Vị trí:</strong> ${job['Vị trí']}<br>
+            <strong>Địa điểm:</strong> ${job['Địa điểm']}<br>
             <strong>Thời gian có mặt:</strong> ${job['Thời gian có mặt']}<br>
             <strong>Bắt đầu điểm danh:</strong> ${job['Thời gian bắt đầu điểm danh']}`;
           document.getElementById('joinSection').style.display = 'block';

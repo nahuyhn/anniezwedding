@@ -3,29 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin - Tracking nhân viên</title>
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <title>Admin - Theo dõi nhân viên</title>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
   <style>
     body { font-family: sans-serif; margin: 0; padding: 0; }
-    #map { height: 100vh; width: 100%; }
-    .popup-info { font-size: 0.9rem; }
+    #map { height: 60vh; width: 100%; }
+    .container { padding: 1rem; }
+    input, button { padding: 0.5rem; margin: 0.25rem 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h2>Admin - Nhập mã công việc</h2>
+    <input type="text" id="jobCode" placeholder="VD: JOB001" />
+    <button onclick="loadEmployees()">Tải danh sách</button>
+    <table id="employeeTable" style="display:none;">
+      <thead>
+        <tr>
+          <th>Họ tên</th>
+          <th>Giới tính</th>
+          <th>SĐT</th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
   <div id="map"></div>
 
   <script>
-    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyACcXy76y8N5XpR-73IBRNHMneNbv2oz9k",
       authDomain: "anniezwedding-be1a8.firebaseapp.com",
       databaseURL: "https://anniezwedding-be1a8-default-rtdb.firebaseio.com",
       projectId: "anniezwedding-be1a8",
-      storageBucket: "anniezwedding-be1a8.firebasestorage.app",
+      storageBucket: "anniezwedding-be1a8.appspot.com",
       messagingSenderId: "792848269559",
       appId: "1:792848269559:web:6b2b6a2ec9a942ce6613f2",
       measurementId: "G-DT55Y6LJY7"
@@ -39,47 +56,67 @@
       maxZoom: 19,
     }).addTo(map);
 
-    const sheetURL = 'https://opensheet.elk.sh/14hpn7reiKVO4lwBHPRST1N6ZgtCrMg4UWEe_D2QDV9k/CongViec';
+    let userMarkers = [];
 
-    // Load công việc từ Google Sheets và hiển thị marker
-    function loadJobLocations() {
-      axios.get(sheetURL).then(res => {
-        res.data.forEach(job => {
-          const loc = job['Vị trí'].split(',').map(x => parseFloat(x.trim()));
-          L.marker(loc, {
-            icon: L.icon({
+    function clearMarkers() {
+      userMarkers.forEach(marker => map.removeLayer(marker));
+      userMarkers = [];
+    }
+
+    function loadEmployees() {
+      const jobCode = document.getElementById('jobCode').value.trim();
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+      clearMarkers();
+
+      // Lấy dữ liệu vị trí công việc từ Google Sheets
+      fetch(`https://opensheet.elk.sh/14hpn7reiKVO4lwBHPRST1N6ZgtCrMg4UWEe_D2QDV9k/CongViec`)
+        .then(res => res.json())
+        .then(jobs => {
+          const job = jobs.find(j => j['Mã công việc'] === jobCode);
+          if (job && job['Vị trí']) {
+            const [lat, lng] = job['Vị trí'].split(',').map(Number);
+            const jobMarker = L.marker([lat, lng], { icon: L.icon({
               iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
               iconSize: [32, 32]
-            })
-          })
-            .addTo(map)
-            .bindPopup(`<strong>Công việc:</strong> ${job['Mã công việc']}`);
+            }) }).addTo(map);
+            jobMarker.bindPopup(`<strong>Vị trí công việc</strong><br>${job['Vị trí']}`);
+            userMarkers.push(jobMarker);
+            map.setView([lat, lng], 14);
+          }
         });
-      });
-    }
 
-    // Lắng nghe dữ liệu nhân viên từ Firebase
-    function listenToEmployees() {
-      db.ref("employees").on("value", snapshot => {
+      // Theo dõi realtime danh sách nhân viên
+      firebase.database().ref('users').orderByChild('jobCode').equalTo(jobCode).on('value', snapshot => {
         const data = snapshot.val();
-        if (!data) return;
-        Object.values(data).forEach(emp => {
-          if (!emp.location) return;
-          const { lat, lng } = emp.location;
-          L.marker([lat, lng]).addTo(map).bindPopup(`
-            <div class="popup-info">
-              <strong>${emp.name}</strong><br>
-              📞 ${emp.phone}<br>
-              🔢 Mã: ${emp.jobCode}<br>
-              🕒 Lúc: ${emp.timestamp}
-            </div>
-          `);
+        tbody.innerHTML = '';
+        clearMarkers();
+
+        if (!data) {
+          alert('Không tìm thấy nhân viên');
+          return;
+        }
+
+        document.getElementById('employeeTable').style.display = 'table';
+
+        Object.values(data).forEach(user => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${user.fullName || 'Không có tên'}</td>
+            <td>${user.gender || '-'}</td>
+            <td>${user.phone || '-'}</td>
+            <td>${user.checkedIn ? 'Đã điểm danh' : 'Chưa điểm danh'}</td>
+          `;
+          tbody.appendChild(tr);
+
+          if (user.latitude && user.longitude) {
+            const marker = L.marker([user.latitude, user.longitude]).addTo(map);
+            marker.bindPopup(`<strong>${user.fullName || 'Nhân viên'}</strong><br>SĐT: ${user.phone || ''}<br>Trạng thái: ${user.checkedIn ? 'Đã điểm danh' : 'Chưa điểm danh'}`);
+            userMarkers.push(marker);
+          }
         });
       });
     }
-
-    loadJobLocations();
-    listenToEmployees();
   </script>
 </body>
 </html>
